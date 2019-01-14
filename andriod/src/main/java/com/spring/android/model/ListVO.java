@@ -1,13 +1,23 @@
-package com.spring.model;
+package com.spring.android.model;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("ListVO")
 public class ListVO {
 
 	private int id;
 	private String image;
 	private String title;
 	private String con;
+	private String category;
 	
-	
+		
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
 	public int getId() {
 		return id;
 	}
@@ -33,17 +43,11 @@ public class ListVO {
 		this.con = con;
 	}
 	
-	public ListVO(int id, String image, String title, String con) {
-		super();
-		this.id = id;
-		this.image = image;
-		this.title = title;
-		this.con = con;
-	}
-	
 	@Override
 	public String toString() {
-		return "ListVO [id=" + id + ", image=" + image + ", title=" + title + ", con=" + con + "]";
+		return "ListVO [id=" + id + ", image=" + image + ", title=" + title + ", con=" + con + ", category=" + category + "]";
 	}
+	
+	
 	
 }

@@ -7,6 +7,30 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style>
+	.data {
+		width : 50%;
+		margin : auto;
+		border : 3px solid darkgray;
+	}
+	.image{
+		float : left;
+		margin-left : 10%;
+	}
+	
+	@media(max-width : 980px){
+		.data{
+			width : 80%;
+			height : 120px;
+		}
+		.image{
+			width : 150px;
+		}
+		p{
+   			margin-top: 20px;
+		}
+	}
+</style>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/navigation.jsp"%>
@@ -15,8 +39,8 @@
 	<div id = "listWrap">
 	<c:if test="${!empty list}">
 		<c:forEach var = "list" items = "${list}">
-			<div onclick = "goDetail('${list.id}', '${list.image}', '${list.title}', '${list.con}')">
-				<img src = "resources/img/${list.image}" id = "image">
+			<div class = "data" onclick = "goDetail('${list.id}')">
+				<img src = "resources/img/${list.image}" id = "image" class = "image">
 				<p id = "title">${list.title}</p>
 				<p id = "con">${list.con}</p>
 			</div>
@@ -30,11 +54,15 @@
 
 </body>
 <script>
-	function getList(str){
+	
+	function goDetail(id){
+		location.href = '${pageContext.request.contextPath}/detail?id=' + id;
+	}
+	/* function getList(category){
 		var list;
 		$.ajax({
 			type : 'post',
-			url : '${pageContext.request.contextPath}/?str=' + str,
+			url : '${pageContext.request.contextPath}/?category=' + category,
 			success : function(data){
 				console.log(data);
 				for(var i = 0; i < data.length; i++){
@@ -46,9 +74,6 @@
 				$('#listWrap').html(list);
 			}
 		});
-	}
-	function goDetail(id, image, title, con){
-		location.href = '${pageContext.request.contextPath}/detail?id=' + id + '&image=' + image + '&title=' + title + '&con=' + con;
-	}
+	} */
 </script>
 </html>
