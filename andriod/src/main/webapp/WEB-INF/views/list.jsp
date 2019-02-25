@@ -47,7 +47,7 @@
 		</c:forEach>
 	</c:if>
 	<c:if test="${empty list}">
-	
+		<h1>리스트가 없습니다.</h1>
 	</c:if>
 	</div>
 </div>

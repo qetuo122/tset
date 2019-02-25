@@ -22,9 +22,7 @@
 			width : 80%;
 			height : 30px;
 		}
-		input[type=button]{
-		}
-	
+			
 	}
 </style>
 </head>
