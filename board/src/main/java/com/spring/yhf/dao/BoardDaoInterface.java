@@ -12,5 +12,7 @@ public interface BoardDaoInterface {
 
 	BoardVO getDetailI(int id);
 
+	int upload(int id, String file, String originalFileName);
+
 
 }

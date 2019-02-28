@@ -76,7 +76,8 @@
 		<img src = "resources/img/icon_3page.png" id = "3line" onclick = "line(3)">
 	    <img src = "resources/img/icon_4page.png" id = "4line" onclick = "line(4)">
 		<img src = "resources/img/icon_5page.png" id = "5line" onclick = "line(5)">
-		<button id = "cart" onclick = "checkBox()" style = "position: absolute; margin-left: 5px;">장바구니</button></div>
+		<button onclick = "getCart()" style = "position: absolute; margin-left: 5px;">장바구니에 저장</button>
+		<button id = "cart" onclick = "checkBox()" style = "position: absolute; margin-left: 120px;">장바구니</button></div>
 	<div id = "contentsWrap">
 		<table>
 			<tr>
@@ -84,10 +85,16 @@
 					<td><div id = "content" class = "content">
 						<img src = "resources/img/${list.img}" class = "contentImg" style = "border : 2px solid white;" onclick = "detail(${list.id})">
 						<input type = "checkbox" id = "chkBox" name = "chkBox" class = "chkBox" 
-						value = "${list.id}- ${list.title}- ${list.img}- ${list.con}" 
-						onclick = "goCart('${list.id}', '${list.img}', '${list.title}', '${list.con}')">
+						value = "${list.id}" 
+						<%-- onclick = "goCart('${list.id}')" --%>>
 						<p>${list.title}</p>
 						<p>${list.con}</p>
+						<c:if test="${!empty list.file}">
+							<p>첨부파일 O</p>
+						</c:if>
+						<c:if test="${empty list.file}">
+							<p>첨부파일 X</p>
+						</c:if>
 					</div></td>
 						<c:if test="${status.count%4 == 0}">
 							</tr><tr>
@@ -210,19 +217,24 @@
 	$(document).ready(function(){
 		$("input:checkbox[id='chkBox']").prop("checked",false);
 	});
+	
 	function checkBox(){
 		location.href = "${pageContext.request.contextPath}/cart";
 	}
 	
-	function goCart(id, img, title, con){
+	function getCart(){
+		$("input:checkbox[name='chkBox']:checked").each(function(){
+			var id = $(this).val();
+			goCart(id);
+		})
+	}
+
+	function goCart(id){
 		$.ajax({
 			url : "${pageContext.request.contextPath}/cart",
 			type : "post",
 			data : {
 				id : id,
-				img : img,
-				title : title,
-				con : con,
 				chk : $("input:checkbox[name='chkBox']").is(':checked')
 			},
 			success : function(data){
@@ -231,41 +243,6 @@
 			}
 		});
 	}
-	/* function goCart(id, img, title, con){
-		
-		if($("input:checkbox[name='chkBox']").is(':checked')) {
-			$.ajax({
-				url : "${pageContext.request.contextPath}/cart",
-				type : "post",
-				data : {
-					id : id,
-					img : img,
-					title : title,
-					con : con,
-					chk : "on"
-				},
-				success : function(data){
-					console.log(data);
-					alert("장바구니에 추가되었습니다.");
-				}
-			});
-		} else {
-			$.ajax({
-				url : "${pageContext.request.contextPath}/cart",
-				type : "post",
-				data : {
-					id : id,
-					img : img,
-					title : title,
-					con : con,
-					chk : "off"
-				},
-				success : function(data){
-					alert("장바구니에서 삭제되었습니다.");
-				}
-			});
-		}
-		
-	} */
+	
 </script>
 </html>

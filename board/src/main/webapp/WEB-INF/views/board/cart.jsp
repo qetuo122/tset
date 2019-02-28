@@ -37,7 +37,13 @@
 							onclick = "delCart('${cart.id}', '${cart.img}', '${cart.title}', '${cart.con}')">
 						<p>${cart.title}</p>
 						<p>${cart.con}</p>
-					</div>
+						<c:if test="${!empty cart.file}">
+							<p>첨부파일 O</p>
+						</c:if>
+						<c:if test="${empty cart.file}">
+							<p>첨부파일 X</p>
+						</c:if>
+					</div> 
 				</td>
 			<c:if test="${status.count%4 == 0}">
 		</tr>
@@ -51,7 +57,7 @@
 
 function delCart(id, img, title, con){
 	var conf = confirm("장바구니에서 삭제하시겠습니까?");
-	if(conf == "true"){
+	if(conf == true){
 		$.ajax({
 			url : "${pageContext.request.contextPath}/cart",
 			type : "post",

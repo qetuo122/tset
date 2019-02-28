@@ -14,4 +14,8 @@
 	<select id="getDetailI" resultType="BoardVO">
 		select * from board.board where id = #{id}
 	</select>
+	
+	<update id="upload" parameterType="map">
+		update board.board set file = #{param2}, originalFile = #{param3} where id = #{param1}
+	</update>
 </mapper>

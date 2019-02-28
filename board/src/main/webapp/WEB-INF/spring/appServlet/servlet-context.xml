@@ -47,4 +47,20 @@
 		<beans:constructor-arg index="0" ref="sqlSessionFactory" />
 	</beans:bean>
 	
+	<!-- 파일업로드 처리를 위한 multipartResolver bean 등록 -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding">
+			<beans:value>utf-8</beans:value>
+		</beans:property>
+	</beans:bean>
+	
+	<beans:bean id="downloadView" class="com.spring.yhf.service.DownLoadImple"></beans:bean>
+ 
+    <beans:bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+    	<beans:property name="order" value="0"/>
+    </beans:bean>
+
+
+	
 </beans:beans>
