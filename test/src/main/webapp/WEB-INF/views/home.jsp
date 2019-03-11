@@ -21,33 +21,25 @@
 </head>
 
 <body>
-<form action = "/login" method = "POST">
+<form action = "${pageContext.request.contextPath}/board" method = "POST">
 	<table>
 	<tr>
 		<td>ID</td>
-		<td><input type = "text" id = "inputId" name = "inputId" value = "${cookie.remember_id.value}"></td>
+		<td><input type = "text" id = "user_id" name = "user_id" value = "${cookie.remember_id.value}" required></td>
 		<td rowspan = "3"><button type = "submit" id = "loginBtn" style = "height : 75px;">로그인</button></td>
 	</tr>
 	<tr>
 		<td>PW</td>
-		<td><input type = "password" id = "inputPw" name = "inputPw"></td>
+		<td><input type = "password" id = "password" name = "password" required></td>
 	</tr>
 	<tr>
 		<td colspan = "2">로그인유지<input type = "checkBox" id = "remember_id" name = "remember_id" ${checked}></td>
 	</tr>
 	</table>
-	<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
 </form>
-<c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
-	<font color = "red">
-		<p>로그인에 실패하셨습니다 <br>
-		${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
-		<c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope = "session"/>
-	</font>
-</c:if>
 </body>
 
-<!-- <script>
+ <!-- <script>
 		$('#loginBtn').click(function(){
 			var id = $('#inputId').val();
 			var pw = $('#inputPw').val();

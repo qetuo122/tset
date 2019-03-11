@@ -3,7 +3,7 @@
 
 <mapper namespace="com.spring.board.dao.UserDaoInterface">
 
-	<select id="getPWI" resultType="String">
+	<select id="getPwI" resultType="String">
 		select * from user where user_id = #{user_id}
 	</select>
 	
@@ -23,7 +23,7 @@
 		update board set password = #{param1} where board_id = #{param2}
 	</update>
 	
-	<select id = "getPwI" resultType="String">
+	<select id = "getBoardPwI" resultType="String">
 		select password from board where board_id = #{board_id}
 	</select>
 	

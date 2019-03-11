@@ -7,7 +7,7 @@ import com.spring.board.model.BoardVO;
 
 public interface UserDaoInterface {
 
-	String getPWI(String user_id);
+	String getPwI(String user_id);
 
 	List<BoardVO> getBoardList();
 
@@ -17,7 +17,7 @@ public interface UserDaoInterface {
 
 	int changePwI(String password, int board_id);
 
-	String getPwI(int board_id);
+	String getBoardPwI(int board_id);
 
 	int changeCntI(int board_id, int view_cnt);
 

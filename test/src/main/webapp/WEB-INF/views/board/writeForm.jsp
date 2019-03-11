@@ -24,8 +24,7 @@
 	<div style = "border-bottom : 1px solid blue; padding-left : 80%; "><input type = "button" id = "goPassword" value = "비밀번호 설정">
 		<input type = "text" id = "isPW" value = "N" style = "border : none; width : 10px;" readonly></div>
 	<input type = "hidden" id = "password" name = "password">
-	<input type = "hidden" id = "writer" name = "writer" value = "<sec:authentication property="principal.username"/>">
-	<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/> <!-- 모든 시큐리티폼에서는 토큰을 항상 보내야함 안그러면 권한오류가 생김 -->
+	<input type = "hidden" id = "writer" name = "writer" value = "${userSession }">
 	<button type = "submit">저장</button> <input type = "button" id = "cancle" value = "취소">
 </form>
 

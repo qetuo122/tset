@@ -19,23 +19,6 @@
 </style>
 </head>
 <body>
- <%-- <%
-	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	Object principal = auth.getPrincipal();
-	
-	String name = "";
-	if(principal != null){
-		name = auth.getName();
-	
-	}
-%>  --%>
-<sec:authorize access = "isAuthenticated()">
-	<%-- <h3><%= name %>님 , 반갑습니다.</h3> --%>
-	<p><sec:authentication property="principal.username"/>님, 반갑습니다.</p>
-	<%-- <p><sec:authentication property="principal"/></p> --%>
-	<p id = "auth" style = "display : none;"><sec:authentication property="principal.authorities"/></p>
-	
-</sec:authorize>
 <table>
 	<tr>
 		<td>번호</td>
@@ -54,12 +37,6 @@
 	</c:forEach>
 </table>
 	<button id = "writeBnt">글쓰기</button>
-	<sec:authorize access = "isAuthenticated()">
-		<form action = "/logout" method = "POST">
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-			<button type="submit">LOGOUT</button>
-		</form>
-	</sec:authorize>
 </body>
 
 <script>

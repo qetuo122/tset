@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.board.model.BoardVO;
-import com.spring.board.model.UserDetailsVO;
+import com.spring.board.model.UserVO;
 import com.spring.board.service.BoardService;
 
 @Controller
@@ -25,10 +25,7 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@RequestMapping(value = "board/list", method = RequestMethod.GET)
-	public ModelAndView board(Authentication auth) {
-		UserDetailsVO vo = (UserDetailsVO) auth.getPrincipal();
-		System.out.println(vo);
-		
+	public ModelAndView board() {
 		List<BoardVO> viewData = boardService.getBoardList();
 		
 		ModelAndView modelAndView = new ModelAndView();
@@ -74,19 +71,17 @@ public class BoardController {
 	
 	@RequestMapping(value = "board/viewCnt")
 	@ResponseBody
-	public String viewCnt(HttpServletRequest request,Authentication auth) {
+	public String viewCnt(HttpServletRequest request) {
 		int board_id = Integer.parseInt(request.getParameter("board_id"));
 		int view_cnt = Integer.parseInt(request.getParameter("view_cnt"));
 		String password = request.getParameter("password");
 		
 		System.out.println(view_cnt + ":" + board_id);
-		System.out.println(auth.getAuthorities());
 		
-		if(auth.getAuthorities().toString().equals("[ROLE_MEMBER]")) {
-			view_cnt = view_cnt + 1;
-			System.out.println(view_cnt);
-			boardService.changeCnt(board_id, view_cnt);
-		}
+		view_cnt = view_cnt + 1;
+		System.out.println(view_cnt);
+		boardService.changeCnt(board_id, view_cnt);
+
 		if(password != "" || password != null) {
 			return "board/pwChk";
 		} else {

@@ -39,7 +39,7 @@ public class BoardService {
 
 	public String getPwS(int board_id) {
 		userDao = sqlSession.getMapper(UserDaoInterface.class);
-		return userDao.getPwI(board_id);
+		return userDao.getBoardPwI(board_id);
 	}
 
 	public int changeCnt(int board_id, int view_cnt) {

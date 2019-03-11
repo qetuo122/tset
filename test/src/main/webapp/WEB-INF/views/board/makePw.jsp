@@ -31,8 +31,6 @@
 	</table>
 </body>
 <script>
-var token = $("meta[name='_csrf']").attr("content");
-var header = $("meta[name='_csrf_header']").attr("content");
 
 var board_id = ${board_id};
 $('#pwComplete').click(function(){
@@ -46,9 +44,6 @@ $('#pwComplete').click(function(){
 			data : {
 				password : pw,
 				board_id : board_id
-			},
-			beforeSend : function(xhr){
-				xhr.setRequestHeader(header,token);
 			},
 			success : function(data){
 				opener.location.href = '${pageContext.request.contextPath}/board/list';

@@ -19,9 +19,6 @@
 </style>
 </head>
 <body>
-<div style = "display : none;"><sec:authorize access = "isAuthenticated()">
-	<p id = "auth"><sec:authentication property="principal.authorities"/></p>
-</sec:authorize></div>
 <table>
 	<tr>
 		<td>비밀번호 : </td>
@@ -38,9 +35,6 @@ $(document).ready(function(){
 	}
 });
 
-var token = $("meta[name='_csrf']").attr("content");
-var header = $("meta[name='_csrf_header']").attr("content");
-
 	function pwChk(board_id, view_cnt){
 		$.ajax({
 			type : 'post',
@@ -48,9 +42,6 @@ var header = $("meta[name='_csrf_header']").attr("content");
 			data : {
 				board_id : board_id,
 				password : $('#pwInput').val()
-			},
-			beforeSend : function(xhr){
-				xhr.setRequestHeader(header,token);
 			},
 			success : function(data){
 				console.log(data);
@@ -61,9 +52,6 @@ var header = $("meta[name='_csrf_header']").attr("content");
 							board_id : board_id,
 							view_cnt : view_cnt,
 							password : $('#pwInput').val()
-						},
-						beforeSend : function(xhr){
-							xhr.setRequestHeader(header,token);
 						},
 						success : function(data){
 							console.log(data);

@@ -3,26 +3,29 @@ package com.spring.board.controller;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.spring.board.service.UserService;
 
 @Controller
 public class UserController {
 	
-	/*@Autowired
-	private UserService userService;*/
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String login(HttpServletRequest request, Authentication auth) {
+	public String login(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		System.out.println("컨트롤러에서 auth확인 : " + auth); // 로그인에 성공하면 auth에 로그인데이터가 저장됨
-		//System.out.println(http);
 		boolean loginChk = false;
 		System.out.println("컨트롤러에서 세션 확인 : " + session.getAttribute("remember_id"));
 		
@@ -53,28 +56,24 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public void login() {
-		System.out.println("로그인확인");
-	}
-	
-	/*@RequestMapping(value = "/", method = RequestMethod.POST)
-	@ResponseBody
+	@RequestMapping(value = "/board", method = RequestMethod.POST)
+	//@ResponseBody
 	public String loginOk(HttpServletRequest request, HttpSession session, HttpServletResponse response) {
 		String user_id = request.getParameter("user_id");
+		String password = request.getParameter("password");
 		String remember_id = request.getParameter("remember_id");
 		
-		System.out.println(user_id);
-		return userService.getPw(user_id,remember_id, session, response);
+		System.out.println(user_id + "," + remember_id + "," + password);
 		
-	}*/
-	
-	// 접근권한이 없을때 실행되는 컨트롤러
-	@RequestMapping(value = "accessDenied")
-	public ModelAndView accessDeniedPage() throws Exception{
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("msg","접근권한이 없습니다.");
-		modelAndView.setViewName("accessDenied"); // /accessDenied페이지로 이동
-		return modelAndView;
+		if (password.equals(userService.getPw(user_id,remember_id, session, response, password))) { // 사용자가 입력한 비밀번호와 데이터베이스이 비밀번호를 비교
+			System.out.println("비밀번호 일치 : " + userService.getPw(user_id,remember_id, session, response, password));
+			session.setAttribute("userSession", user_id); // 아이디와 비밀번호가 일치(로그인)하면 유저정보 세션에 저장
+			return "redirect:/board/list";
+		} else {
+			System.out.println("비밀번호 불일치 : " + userService.getPw(user_id,remember_id, session, response, password));
+			return "redirect:/";
+		}
+		//return userService.getPw(user_id,remember_id, session, response);
+		
 	}
 }
